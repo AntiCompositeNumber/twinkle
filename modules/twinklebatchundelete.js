@@ -1,3 +1,6 @@
+(function($){
+
+
 /*
  ****************************************
  *** twinklebatchundelete.js: Batch undelete module
@@ -124,3 +127,4 @@ Twinkle.batchundelete.callbacks = {
 		}
 	}
 };
+})(jQuery);

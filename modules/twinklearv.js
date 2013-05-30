@@ -1,3 +1,6 @@
+(function($){
+
+
 /*
  ****************************************
  *** twinklearv.js: ARV module
@@ -251,3 +254,4 @@ Twinkle.arv.callback.evaluate = function(e) {
 			break;
 	}
 };
+})(jQuery);

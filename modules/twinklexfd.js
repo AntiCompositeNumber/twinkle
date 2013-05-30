@@ -1,3 +1,6 @@
+(function($){
+
+
 /*
  ****************************************
  *** twinklexfd.js: XFD module
@@ -365,3 +368,4 @@ Twinkle.xfd.callback.evaluate = function(e) {
 		wikipedia_api.params = { usertalk:usertalk, reason:reason, noinclude:noinclude };
 		wikipedia_api.post();
 };
+})(jQuery);

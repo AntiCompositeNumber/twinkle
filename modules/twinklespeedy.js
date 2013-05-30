@@ -1,3 +1,6 @@
+(function($){
+
+
 /*
  ****************************************
  *** twinklespeedy.js: CSD module
@@ -1089,3 +1092,4 @@ Twinkle.speedy.callback.evaluateUser = function twinklespeedyCallbackEvaluateUse
 	wikipedia_page.setCallbackParameters(params);
 	wikipedia_page.load(Twinkle.speedy.callbacks.user.main);
 };
+})(jQuery);

@@ -1,3 +1,6 @@
+(function($){
+
+
 /*
  ****************************************
  *** friendlyshared.js: Shared IP tagging module
@@ -166,3 +169,4 @@ Twinkle.shared.callback.evaluate = function friendlysharedCallbackEvaluate(e) {
 	wikipedia_page.setCallbackParameters(params);
 	wikipedia_page.load(Twinkle.shared.callbacks.main);
 };
+})(jQuery);

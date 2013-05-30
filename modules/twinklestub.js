@@ -1,3 +1,4 @@
+(function($){
 /*
  ****************************************
  *** twinklestub.js: Tag module
@@ -392,3 +393,4 @@ Twinkle.stub.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 			return;
 	}
 };
+})(jQuery);
