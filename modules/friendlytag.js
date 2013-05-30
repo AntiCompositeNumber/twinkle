@@ -1,3 +1,6 @@
+//<nowiki>
+
+
 (function($){
 
 
@@ -17,7 +20,7 @@ Twinkle.tag = function friendlytag() {
 	// redirect tagging
 	if( Morebits.wiki.isPageRedirect() ) {
 		Twinkle.tag.mode = 'redirect';
-		twAddPortletLink( Twinkle.tag.callback, "Tag", "friendly-tag", "Tag redirect" );
+		Twinkle.addPortletLink( Twinkle.tag.callback, "Tag", "friendly-tag", "Tag redirect" );
 	}
 	// file tagging
 	else if( mw.config.get('wgNamespaceNumber') === 6 && !document.getElementById("mw-sharedupload") && document.getElementById("mw-imagepage-section-filehistory") ) {
@@ -26,7 +29,7 @@ Twinkle.tag = function friendlytag() {
 	// article/draft article tagging
 	else if( ( mw.config.get('wgNamespaceNumber') === 0 || /^Wikipedia([ _]talk)?\:Requested[ _]pages\//.exec(mw.config.get('wgPageName')) ) && mw.config.get('wgCurRevisionId') ) {
 		Twinkle.tag.mode = 'article';
-		twAddPortletLink( Twinkle.tag.callback, "Tag", "friendly-tag", "Add maintenance tags to article" );
+		Twinkle.addPortletLink( Twinkle.tag.callback, "Tag", "friendly-tag", "Add maintenance tags to article" );
 	}
 };
 
@@ -707,3 +710,6 @@ Twinkle.tag.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 	}
 };
 })(jQuery);
+
+
+//</nowiki>

@@ -1,3 +1,6 @@
+//<nowiki>
+
+
 (function($){
 
 
@@ -17,7 +20,7 @@
 			return;
 		}
 
-		twAddPortletLink( callback, "TB", "friendly-talkback", "Easy talkback" );
+		Twinkle.addPortletLink( callback, "TB", "friendly-talkback", "Easy talkback" );
 	};
 
 	var callback = function( ) {
@@ -316,3 +319,6 @@
 
 }());
 })(jQuery);
+
+
+//</nowiki>

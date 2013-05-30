@@ -1,3 +1,6 @@
+//<nowiki>
+
+
 (function($){
 /*
  ****************************************
@@ -21,7 +24,7 @@ Twinkle.stub = function friendlytag() {
 	// article/draft article tagging
 	else if( ( mw.config.get('wgNamespaceNumber') === 0 || /^Wikipedia([ _]talk)?\:Requested[ _]pages\//.exec(mw.config.get('wgPageName')) ) && mw.config.get('wgCurRevisionId') ) {
 		Twinkle.stub.mode = 'article';
-		twAddPortletLink( Twinkle.stub.callback, "Stub", "friendly-tag", "Add stub tags to article" );
+		Twinkle.addPortletLink( Twinkle.stub.callback, "Stub", "friendly-tag", "Add stub tags to article" );
 	}
 };
 
@@ -394,3 +397,6 @@ Twinkle.stub.callback.evaluate = function friendlytagCallbackEvaluate(e) {
 	}
 };
 })(jQuery);
+
+
+//</nowiki>

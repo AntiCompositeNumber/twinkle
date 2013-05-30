@@ -1,3 +1,6 @@
+//<nowiki>
+
+
 (function($){
 
 
@@ -23,12 +26,12 @@ Twinkle.speedy = function twinklespeedy() {
 		return;
 	}
 
-	twAddPortletLink( Twinkle.speedy.callback, "QD", "tw-csd", Morebits.userIsInGroup('sysop') ? "Delete page according to WP:QD" : "Request speedy deletion according to WP:QD" );
+	Twinkle.addPortletLink( Twinkle.speedy.callback, "QD", "tw-csd", Morebits.userIsInGroup('sysop') ? "Delete page according to WP:QD" : "Request speedy deletion according to WP:QD" );
 };
 
 // This function is run when the CSD tab/header link is clicked
 Twinkle.speedy.callback = function twinklespeedyCallback() {
-	if ( !twinkleUserAuthorized ) {
+	if ( !Twinkle.userAuthorized ) {
 		alert("Your account is too new to use Twinkle.");
 		return;
 	}
@@ -1093,3 +1096,6 @@ Twinkle.speedy.callback.evaluateUser = function twinklespeedyCallbackEvaluateUse
 	wikipedia_page.load(Twinkle.speedy.callbacks.user.main);
 };
 })(jQuery);
+
+
+//</nowiki>

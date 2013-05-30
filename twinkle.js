@@ -1,5 +1,5 @@
 /**
- * ------------------------------------------------------------------------------------------------------------
+* ------------------------------------------------------------------------------------------------------------
  *   === WARNING: GADGET FILE === 
  *   Changes to this page affect many users.
  *   Please discuss changes at [[Wikipedia:Twinkle/Development]] before editing.
@@ -19,6 +19,9 @@
 
 var Twinkle = {};
 window.Twinkle = Twinkle;  // allow global access
+
+// Check if account is experienced enough to use Twinkle
+Twinkle.userAuthorized = Morebits.userIsInGroup( "autoconfirmed" ) || Morebits.userIsInGroup( "confirmed" );
 
 // for use by custom modules (normally empty)
 Twinkle.initCallbacks = [];
@@ -173,7 +176,7 @@ Twinkle.getFriendlyPref = function twinkleGetFriendlyPref(name) {
 
 
 /**
- * **************** twAddPortlet() ****************
+ * **************** Twinkle.addPortlet() ****************
  *
  * Adds a portlet menu to one of the navigation areas on the page.
  * This is necessarily quite a hack since skins, navigation areas, and
@@ -201,7 +204,7 @@ Twinkle.getFriendlyPref = function twinkleGetFriendlyPref(name) {
  *
  * @return Node -- the DOM node of the new item (a DIV element) or null
  */
-function twAddPortlet( navigation, id, text, type, nextnodeid )
+Twinkle.addPortlet = function( navigation, id, text, type, nextnodeid )
 {
 	//sanity checks, and get required DOM nodes
 	var root = document.getElementById( navigation );
@@ -284,6 +287,10 @@ function twAddPortlet( navigation, id, text, type, nextnodeid )
 
 			$(a).click(function(e) {
 				e.preventDefault();
+                if ( !Twinkle.userAuthorized ) {
+                    alert("Sorry, your account is too new to use Twinkle.");
+                }
+
 			});
 
 			h3.appendChild(a);
@@ -311,14 +318,14 @@ function twAddPortlet( navigation, id, text, type, nextnodeid )
 
 
 /**
- * **************** twAddPortletLink() ****************
+ * **************** Twinkle.addPortletLink() ****************
  * Builds a portlet menu if it doesn't exist yet, and add the portlet link.
  * @param task: Either a URL for the portlet link or a function to execute.
  */
-function twAddPortletLink( task, text, id, tooltip )
+Twinkle.addPortletLink = function( task, text, id, tooltip )
 {
 	if ( Twinkle.getPref("portletArea") !== null ) {
-		twAddPortlet( Twinkle.getPref( "portletArea" ), Twinkle.getPref( "portletId" ), Twinkle.getPref( "portletName" ), Twinkle.getPref( "portletType" ), Twinkle.getPref( "portletNext" ));
+		Twinkle.addPortlet( Twinkle.getPref( "portletArea" ), Twinkle.getPref( "portletId" ), Twinkle.getPref( "portletName" ), Twinkle.getPref( "portletType" ), Twinkle.getPref( "portletNext" ));
 	}
 	var link = mw.util.addPortletLink( Twinkle.getPref( "portletId" ), typeof task === "string" ? task : "#", text, id, tooltip );
 	$('.client-js .skin-vector #p-cactions').css('margin-right', 'initial');
@@ -334,8 +341,6 @@ function twAddPortletLink( task, text, id, tooltip )
 	return link;
 }
 
-// Check if account is experienced enough to use Twinkle
-var twinkleUserAuthorized = Morebits.userIsInGroup( "autoconfirmed" ) || Morebits.userIsInGroup( "confirmed" );
 /**
  * General initialization code
  */

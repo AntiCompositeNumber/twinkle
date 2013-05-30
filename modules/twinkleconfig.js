@@ -1,3 +1,6 @@
+//<nowiki>
+
+
 (function($){
 
 
@@ -1555,3 +1558,6 @@ Twinkle.config.saveSuccess = function twinkleconfigSaveSuccess(pageobj) {
 	Morebits.status.root.appendChild(noticeclear);
 };
 })(jQuery);
+
+
+//</nowiki>

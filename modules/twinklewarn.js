@@ -1,3 +1,6 @@
+//<nowiki>
+
+
 (function($){
 
 
@@ -12,7 +15,7 @@
 
 Twinkle.warn = function twinklewarn() {
 	if( mw.config.get('wgNamespaceNumber') === 3 ) {
-			twAddPortletLink( Twinkle.warn.callback, "Warn", "tw-warn", "Warn/notify user" );
+			Twinkle.addPortletLink( Twinkle.warn.callback, "Warn", "tw-warn", "Warn/notify user" );
 	}
 
 	// modify URL of talk page on rollback success pages
@@ -32,7 +35,7 @@ Twinkle.warn = function twinklewarn() {
 };
 
 Twinkle.warn.callback = function twinklewarnCallback() {
-	if ( !twinkleUserAuthorized ) {
+	if ( !Twinkle.userAuthorized ) {
 		alert("Your account is too new to use Twinkle.");
 		return;
 	}
@@ -874,3 +877,6 @@ Twinkle.warn.callback.evaluate = function twinklewarnCallbackEvaluate(e) {
 	wikipedia_page.load( Twinkle.warn.callbacks.main );
 };
 })(jQuery);
+
+
+//</nowiki>
