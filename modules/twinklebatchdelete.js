@@ -25,7 +25,7 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 	form.append( {
 			type: 'checkbox',
 			list: [
-				{ 
+				{
 					label: 'Delete pages',
 					name: 'delete_page',
 					value: 'delete',
@@ -35,7 +35,7 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 					label: 'Remove backlinks to the page',
 					name: 'unlink_page',
 					value: 'unlink',
-					checked: true
+					checked: false
 				},
 				{
 					label: 'Delete redirects to deleted pages',
@@ -110,15 +110,8 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 			'rvprop': [ 'size' ]
 		};
 	}
-	
-	var statusdiv = document.createElement( 'div' );
-	statusdiv.style.padding = '15px';  // just so it doesn't look broken
-	Window.setContent(statusdiv);
-	Morebits.status.init(statusdiv);
-	Window.display();
 
-	var statelem = new Morebits.status("Grabbing list of pages");
-	var wikipedia_api = new Morebits.wiki.api( 'loading...', query, function( self ) {
+	var wikipedia_api = new Morebits.wiki.api( 'Grabbing pages', query, function( self ) {
 			var xmlDoc = self.responseXML;
 			var snapshot = xmlDoc.evaluate('//page[@ns != "6" and not(@missing)]', xmlDoc, null, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null );  // 6 = File: namespace
 			var list = [];
@@ -139,10 +132,14 @@ Twinkle.batchdelete.callback = function twinklebatchdeleteCallback() {
 
 			var result = self.params.form.render();
 			self.params.Window.setContent( result );
-		}, statelem );
+		} );
 
 	wikipedia_api.params = { form:form, Window:Window };
 	wikipedia_api.post();
+	var root = document.createElement( 'div' );
+	Morebits.status.init( root );
+	Window.setContent( root );
+	Window.display();
 };
 
 Twinkle.batchdelete.currentDeleteCounter = 0;
@@ -241,14 +238,14 @@ Twinkle.batchdelete.callbacks = {
 
 			var wikipedia_page = new Morebits.wiki.page( self.params.page, 'Deleting page ' + self.params.page );
 			wikipedia_page.setEditSummary(self.params.reason + Twinkle.getPref('deletionSummaryAd'));
-			wikipedia_page.deletePage(function( apiobj ) { 
+			wikipedia_page.deletePage(function( apiobj ) {
 					--Twinkle.batchdelete.currentDeleteCounter;
 					var link = document.createElement( 'a' );
-					link.setAttribute( 'href', mw.util.wikiGetlink(self.params.page) );
+					link.setAttribute( 'href', mw.util.getUrl(self.params.page) );
 					link.setAttribute( 'title', self.params.page );
 					link.appendChild( document.createTextNode( self.params.page ) );
 					apiobj.statelem.info( [ 'completed (' , link , ')' ] );
-				} );	
+				} );
 		} else {
 			--Twinkle.batchdelete.currentDeleteCounter;
 		}
@@ -294,7 +291,7 @@ Twinkle.batchdelete.callbacks = {
 		for ( var i = 0; i < snapshot.snapshotLength; ++i ) {
 			var title = snapshot.snapshotItem(i).value;
 			var wikipedia_page = new Morebits.wiki.page( title, "Deleting " + title );
-			wikipedia_page.setEditSummary('[[WP:CSD#G8|G8]]: Redirect to deleted page "' + self.params.page + '"' + Twinkle.getPref('deletionSummaryAd'));
+			wikipedia_page.setEditSummary('[[WP:QD#G8|G8]]: Redirect to deleted page "' + self.params.page + '"' + Twinkle.getPref('deletionSummaryAd'));
 			wikipedia_page.setCallbackParameters(params);
 			wikipedia_page.deletePage(onsuccess);
 		}

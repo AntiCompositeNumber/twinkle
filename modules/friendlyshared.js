@@ -68,52 +68,32 @@ Twinkle.shared.callback = function friendlysharedCallback( uid ) {
 
 Twinkle.shared.standardList = [
 	{
-		label: '{{Shared IP}}: standard shared IP address template',
+		label: '{{SharedIP}}: standard shared IP address template',
 		value: 'Shared IP',
 		tooltip: 'IP user talk page template that shows helpful information to IP users and those wishing to warn, block or ban them'
 	},
 	{ 
-		label: '{{Shared IP edu}}: shared IP address template modified for educational institutions',
-		value: 'Shared IP edu'
+		label: '{{SchoolIP}}: shared IP address template modified for educational institutions',
+		value: 'SchoolIP'
 	},
 	{
-		label: '{{Shared IP corp}}: shared IP address template modified for businesses',
-		value: 'Shared IP corp'
-	},
-	{
-		label: '{{Shared IP public}}: shared IP address template modified for public terminals',
-		value: 'Shared IP public'
-	},
-	{
-		label: '{{Shared IP gov}}: shared IP address template modified for government agencies or facilities',
-		value: 'Shared IP gov'
-	},
-	{
-		label: '{{Dynamic IP}}: shared IP address template modified for organizations with dynamic addressing',
-		value: 'Dynamic IP'
-	},
-	{
-		label: '{{Static IP}}: shared IP address template modified for static IP addresses',
-		value: 'Static IP'
+		label: '{{SharedIPCORP}}: shared IP address template modified for businesses',
+		value: 'SharedIPCORP'
 	},
 	{ 
 		label: '{{ISP}}: shared IP address template modified for ISP organizations (specifically proxies)',
 		value: 'ISP'
-	},
-	{ 
-		label: '{{Mobile IP}}: shared IP address template modified for mobile phone companies and their customers',
-		value: 'Mobile IP'
-	},
-	{
-		label: '{{Whois}}: template for IP addresses in need of monitoring, but unknown whether static, dynamic or shared',
-		value: 'Whois'
 	}
 ];
 
 Twinkle.shared.callback.change_shared = function friendlysharedCallbackChangeShared(e) {
-	e.target.form.contact.disabled = (e.target.value !== 'Shared IP edu');  // only supported by {{Shared IP edu}}
-	e.target.form.organization.disabled = false;
-	e.target.form.host.disabled = (e.target.value === 'Whois');  // host= not supported by {{Whois}}
+	if( e.target.value === 'Shared IP edu' ) {
+		e.target.form.contact.disabled = false;
+	} else {
+		e.target.form.contact.disabled = true;
+	}
+	e.target.form.organization.disabled=false;
+	e.target.form.host.disabled=false;
 };
 
 Twinkle.shared.callbacks = {
@@ -137,10 +117,10 @@ Twinkle.shared.callbacks = {
 
 		Morebits.status.info( 'Info', 'Will add the shared IP address template to the top of the user\'s talk page.' );
 		text += params.value + '|' + params.organization;
-		if( params.value === 'Shared IP edu' && params.contact !== '') {
+		if( params.value === 'shared IP edu' && params.contact !== '') {
 			text += '|' + params.contact;
 		}
-		if( params.value !== 'Whois' && params.host !== '' ) {
+		if( params.host !== '' ) {
 			text += '|host=' + params.host;
 		}
 		text += '}}\n\n';

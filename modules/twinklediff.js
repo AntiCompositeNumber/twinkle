@@ -7,7 +7,7 @@
  * Config directives in:   TwinkleConfig
  */
 
-Twinkle.diff = function twinklediff() { 
+Twinkle.diff = function twinklediff() {
 	if( mw.config.get('wgNamespaceNumber') < 0 || !mw.config.get('wgArticleId') ) {
 		return;
 	}
@@ -52,12 +52,12 @@ Twinkle.diff.evaluate = function twinklediffEvaluate(me) {
 		'prop': 'revisions',
 		'action': 'query',
 		'titles': mw.config.get('wgPageName'),
-		'rvlimit': 1, 
+		'rvlimit': 1,
 		'rvprop': [ 'ids', 'user' ],
 		'rvstartid': mw.config.get('wgCurRevisionId') - 1, // i.e. not the current one
 		'rvuser': user
 	};
-	Morebits.status.init( document.getElementById('mw-content-text') );
+	Morebits.status.init( document.getElementById('bodyContent') );
 	var wikipedia_api = new Morebits.wiki.api( 'Grabbing data of initial contributor', query, Twinkle.diff.callbacks.main );
 	wikipedia_api.params = { user: user };
 	wikipedia_api.post();

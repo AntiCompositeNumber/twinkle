@@ -23,71 +23,53 @@ Twinkle.config.commonEnums = {
 
 Twinkle.config.commonSets = {
 	csdCriteria: {
-		db: "Custom rationale ({{db}})",
-		g1: "G1", g2: "G2", g3: "G3", g4: "G4", g5: "G5", g6: "G6", g7: "G7", g8: "G8", g10: "G10", g11: "G11", g12: "G12", g13: "G13",
-		a1: "A1", a2: "A2", a3: "A3", a5: "A5", a7: "A7", a9: "A9", a10: "A10",
-		u1: "U1", u2: "U2", u3: "U3",
-		f1: "F1", f2: "F2", f3: "F3", f7: "F7", f8: "F8", f9: "F9", f10: "F10",
+		db: "Custom rationale",
+		g1: "G1", g2: "G2", g3: "G3", g4: "G4", g6: "G6", g7: "G7", g8: "G8", g10: "G10", g11: "G11", g12: "G12",
+		a1: "A1", a2: "A2", a3: "A3", a4: "A4", a5: "A5", a6: "A6",
+		u1: "U1", u2: "U2",
+		f1: "F1",
 		c1: "C1",
-		t2: "T2", t3: "T3",
-		r2: "R2", r3: "R3",
-		p1: "P1", p2: "P2"
+		t2: "T2",
+		r2: "R2", r3: "R3"
 	},
 	csdCriteriaDisplayOrder: [
 		"db",
-		"g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g10", "g11", "g12", "g13",
-		"a1", "a2", "a3", "a5", "a7", "a9", "a10",
-		"u1", "u2", "u3",
-		"f1", "f2", "f3", "f7", "f8", "f9", "f10",
+		"g1", "g2", "g3", "g4", "g6", "g7", "g8", "g10", "g11", "g12",
+		"a1", "a2", "a3", "a4", "a5", "a6",
+		"u1", "u2",
+		"f1",
 		"c1",
-		"t2", "t3",
-		"r2", "r3",
-		"p1", "p2"
+		"t2",
+		"r2", "r3"
 	],
-	csdCriteriaNotification: {
-		db: "Custom rationale ({{db}})",
-		g1: "G1", g2: "G2", g3: "G3", g4: "G4", g6: 'G6 ("unnecessary disambig." and "copy-paste move" only)',
-		g10: "G10", g11: "G11", g12: "G12", g13: "G13",
-		a1: "A1", a2: "A2", a3: "A3", a5: "A5", a7: "A7", a9: "A9", a10: "A10",
-		u3: "U3",
-		f1: "F1", f2: "F2", f3: "F3", f7: "F7", f8: "F8", f9: "F9", f10: "F10",
-		c1: "C1",
-		t2: "T2", t3: "T3",
-		r2: "R2", r3: "R3",
-		p1: "P1", p2: "P2"
-	},
 	csdCriteriaNotificationDisplayOrder: [
 		"db",
-		"g1", "g2", "g3", "g4", "g6", "g10", "g11", "g12", "g13",
-		"a1", "a2", "a3", "a5", "a7", "a9", "a10",
-		"u3",
-		"f1", "f2", "f3", "f7", "f9", "f10",
+		"g1", "g2", "g3", "g4", "g10", "g11", "g12",
+		"a1", "a2", "a3", "a4", "a5", "a6",
+		"f1",
 		"c1",
-		"t2", "t3",
-		"r2", "r3",
-		"p1", "p2"
+		"t2",
+		"r2", "r3"
 	],
 	csdAndDICriteria: {
-		db: "Custom rationale ({{db}})",
-		g1: "G1", g2: "G2", g3: "G3", g4: "G4", g5: "G5", g6: "G6", g7: "G7", g8: "G8", g10: "G10", g11: "G11", g12: "G12", g13: "G13",
-		a1: "A1", a2: "A2", a3: "A3", a5: "A5", a7: "A7", a9: "A9", a10: "A10",
-		u1: "U1", u2: "U2", u3: "U3",
-		f1: "F1", f2: "F2", f3: "F3", f4: "F4", f5: "F5", f6: "F6", f7: "F7", f8: "F8", f9: "F9", f10: "F10", f11: "F11",
+		db: "Custom rationale",
+		g1: "G1", g2: "G2", g3: "G3", g4: "G4", g6: "G6", g7: "G7", g8: "G8", g10: "G10", g11: "G11", g12: "G12",
+		a1: "A1", a2: "A2", a3: "A3", a4: "A4", a5: "A5", a6: "A6",
+		u1: "U1", u2: "U2",
+		f1: "F1",
 		c1: "C1",
-		t2: "T2", t3: "T3",
-		r2: "R2", r3: "R3",
-		p1: "P1", p2: "P2"
+		t2: "T2",
+		r2: "R2", r3: "R3"
 	},
 	csdAndDICriteriaDisplayOrder: [
 		"db",
-		"g1", "g2", "g3", "g4", "g5", "g6", "g7", "g8", "g10", "g11", "g12", "g13",
-		"a1", "a2", "a3", "a5", "a7", "a9", "a10",
-		"u1", "u2", "u3",
-		"f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11",
+		"g1", "g2", "g3", "g4", "g6", "g7", "g8", "g10", "g11", "g12",
+		"a1", "a2", "a3", "a4", "a5", "a6",
+		"u1", "u2",
+		"f1",
 		"c1",
-		"t2", "t3",
-		"r2", "r3",
-		"p1", "p2"
+		"t2",
+		"r2", "r3"
 	],
 	namespacesNoSpecial: {
 		"0": "Article",
@@ -105,11 +87,7 @@ Twinkle.config.commonSets = {
 		"12": "Help",
 		"13": "Help talk",
 		"14": "Category",
-		"15": "Category talk",
-		"100": "Portal",
-		"101": "Portal talk",
-		"108": "Book",
-		"109": "Book talk"
+		"15": "Category talk"
 	}
 };
 
@@ -195,71 +173,6 @@ Twinkle.config.sections = [
 },
 
 {
-	title: "Image deletion (DI)",
-	preferences: [
-		// TwinkleConfig.notifyUserOnDeli (boolean)
-		// If the user should be notified after placing a file deletion tag
-		{
-			name: "notifyUserOnDeli",
-			label: "Check the \"notify initial uploader\" box by default",
-			type: "boolean"
-		},
-
-		// TwinkleConfig.deliWatchPage (string)
-		// The watchlist setting of the page tagged for deletion. Either "yes", "no", or "default". Default is "default" (Duh).
-		{
-			name: "deliWatchPage",
-			label: "Add image page to watchlist when tagging",
-			type: "enum",
-			enumValues: Twinkle.config.commonEnums.watchlist
-		},
-
-		// TwinkleConfig.deliWatchUser (string)
-		// The watchlist setting of the user talk page if a notification is placed. Either "yes", "no", or "default". Default is "default" (Duh).
-		{
-			name: "deliWatchUser",
-			label: "Add user talk page of initial uploader to watchlist when notifying",
-			type: "enum",
-			enumValues: Twinkle.config.commonEnums.watchlist
-		}
-	]
-},
-
-{
-	title: "Proposed deletion (PROD)",
-	preferences: [
-		// TwinkleConfig.watchProdPages (boolean)
-		// If, when applying prod template to page, to watch the page
-		{
-			name: "watchProdPages",
-			label: "Add article to watchlist when tagging",
-			type: "boolean"
-		},
-
-		// TwinkleConfig.prodReasonDefault (string)
-		// The prefilled PROD reason.
-		{
-			name: "prodReasonDefault",
-			label: "Prefilled PROD reason",
-			type: "string"
-		},
-
-		{
-			name: "logProdPages",
-			label: "Keep a log in userspace of all pages you tag for PROD",
-			helptip: "Since non-admins do not have access to their deleted contributions, the userspace log offers a good way to keep track of all pages you tag for PROD using Twinkle.",
-			type: "boolean"
-		},
-		{
-			name: "prodLogPageName",
-			label: "Keep the PROD userspace log at this user subpage",
-			helptip: "Enter a subpage name in this box. You will find your PROD log at User:<i>username</i>/<i>subpage name</i>. Only works if you turn on the PROD userspace log.",
-			type: "string"
-		}
-	]
-},
-
-{
 	title: "Revert and rollback",  // twinklefluff module
 	preferences: [
 		// TwinkleConfig.openTalkPage (array)
@@ -339,7 +252,7 @@ Twinkle.config.sections = [
 },
 
 {
-	title: "Speedy deletion (CSD)",
+	title: "Quick deletion (QD)",
 	preferences: [
 		{
 			name: "speedySelectionStyle",
@@ -377,9 +290,9 @@ Twinkle.config.sections = [
 		{
 			name: "notifyUserOnSpeedyDeletionNomination",
 			label: "Notify page creator only when tagging with these criteria",
-			helptip: "Even if you choose to notify from the CSD screen, the notification will only take place for those criteria selected here.",
+			helptip: "Even if you choose to notify from the QD screen, the notification will only take place for those criteria selected here.",
 			type: "set",
-			setValues: Twinkle.config.commonSets.csdCriteriaNotification,
+			setValues: Twinkle.config.commonSets.csdCriteria,
 			setDisplayOrder: Twinkle.config.commonSets.csdCriteriaNotificationDisplayOrder
 		},
 
@@ -389,9 +302,9 @@ Twinkle.config.sections = [
 		{
 			name: "welcomeUserOnSpeedyDeletionNotification",
 			label: "Welcome page creator alongside notification when tagging with these criteria",
-			helptip: "The welcome is issued only if the user is notified about the deletion, and only if their talk page does not already exist. The template used is {{firstarticle}}.",
+			helptip: "The welcome is issued only if the user is notified about the deletion, and only if their talk page does not already exist. The template used is {{<a href=\"" + mw.util.getUrl("Template:Firstarticle") + "\">firstarticle</a>}}.",
 			type: "set",
-			setValues: Twinkle.config.commonSets.csdCriteriaNotification,
+			setValues: Twinkle.config.commonSets.csdCriteria,
 			setDisplayOrder: Twinkle.config.commonSets.csdCriteriaNotificationDisplayOrder
 		},
 
@@ -425,13 +338,6 @@ Twinkle.config.sections = [
 			type: "boolean"
 		},
 
-		{
-			name: "deleteRedirectsOnDelete",
-			label: "Check the \"also delete redirects\" box by default",
-			adminOnly: true,
-			type: "boolean"
-		},
-
 		// TwinkleConfig.deleteSysopDefaultToTag (boolean)
 		// Make the CSD screen default to "tag" instead of "delete" (admin only)
 		{
@@ -460,14 +366,14 @@ Twinkle.config.sections = [
 
 		{
 			name: "logSpeedyNominations",
-			label: "Keep a log in userspace of all CSD nominations",
-			helptip: "Since non-admins do not have access to their deleted contributions, the userspace log offers a good way to keep track of all pages you nominate for CSD using Twinkle. Files tagged using DI are also added to this log.",
+			label: "Keep a log in userspace of all QD nominations",
+			helptip: "Since non-admins do not have access to their deleted contributions, the userspace log offers a good way to keep track of all pages you nominate for QD using Twinkle. Files tagged using DI are also added to this log.",
 			type: "boolean"
 		},
 		{
 			name: "speedyLogPageName",
-			label: "Keep the CSD userspace log at this user subpage",
-			helptip: "Enter a subpage name in this box. You will find your CSD log at User:<i>username</i>/<i>subpage name</i>. Only works if you turn on the CSD userspace log.",
+			label: "Keep the QD userspace log at this user subpage",
+			helptip: "i.e. User:<i>username</i>/<i>subpage name</i>. Only works if you turn on the QD userspace log.",
 			type: "string"
 		},
 		{
@@ -487,11 +393,6 @@ Twinkle.config.sections = [
 		{
 			name: "watchTaggedPages",
 			label: "Add page to watchlist when tagging",
-			type: "boolean"
-		},
-		{
-			name: "watchMergeDiscussions",
-			label: "Add talk pages to watchlist when starting merge discussions",
 			type: "boolean"
 		},
 		{
@@ -523,6 +424,35 @@ Twinkle.config.sections = [
 			type: "customList",
 			customListValueTitle: "Template name (no curly brackets)",
 			customListLabelTitle: "Text to show in Tag dialog"
+		}
+	]
+},
+
+{
+	title: "Stub",
+	inFriendlyConfig: true,
+	preferences: [
+		{
+			name: "watchStubbedPages",
+			label: "Add page to watchlist when tagging",
+			type: "boolean"
+		},
+		{
+			name: "markStubbedPagesAsMinor",
+			label: "Mark addition of tags as a minor edit",
+			type: "boolean"
+		},
+		{
+			name: "markStubbedPagesAsPatrolled",
+			label: "Mark pages as patrolled when tagging (if possible)",
+			helptip: "Due to technical limitations, pages are only marked as patrolled when they are reached via Special:NewPages.",
+			type: "boolean"
+		},
+		{
+			name: "stubArticleSortOrder",
+			label: "Default view order for stub list",
+			type: "enum",
+			enumValues: { "cat": "By categories", "alpha": "In alphabetical order" }
 		}
 	]
 },
@@ -584,17 +514,7 @@ Twinkle.config.sections = [
 			name: "defaultWarningGroup",
 			label: "Default warning level",
 			type: "enum",
-			enumValues: {
-				"1": "Level 1",
-				"2": "Level 2",
-				"3": "Level 3",
-				"4": "Level 4",
-				"5": "Level 4im",
-				"6": "Single-issue notices",
-				"7": "Single-issue warnings",
-				"9": "Custom warnings",
-				"8": "Block (admin only)"
-			}
+			enumValues: { "1": "Level 1", "2": "Level 2", "3": "Level 3", "4": "Level 4", "5": "Level 4im", "6": "Single-issue notices", "7": "Single-issue warnings", "8": "Block (admin only)" }
 		},
 
 		// TwinkleConfig.showSharedIPNotice may take arguments:
@@ -603,7 +523,7 @@ Twinkle.config.sections = [
 		{
 			name: "showSharedIPNotice",
 			label: "Add extra notice on shared IP talk pages",
-			helptip: "Notice used is {{SharedIPAdvice}}",
+			helptip: "Notice used is {{<a href='" + mw.util.getUrl("Template:SharedIPAdvice") + "'>SharedIPAdvice</a>}}",
 			type: "boolean"
 		},
 
@@ -620,17 +540,9 @@ Twinkle.config.sections = [
 		{
 			name: "blankTalkpageOnIndefBlock",
 			label: "Blank the talk page when indefinitely blocking users",
-			helptip: "See <a href=\"" + mw.util.wikiGetlink("WP:UW#Indefinitely blocked users") + "\">WP:UW</a> for more information.",
+			helptip: "See <a href=\"" + mw.util.getUrl("WP:UW#Indefinitely blocked users") + "\">WP:UW</a> for more information.",
 			adminOnly: true,
 			type: "boolean"
-		},
-		{
-			name: "customWarningList",
-			label: "Custom warning templates to display",
-			helptip: "You can add individual templates or user subpages. Custom warnings appear in the \"Custom warnings\" category within the warning dialog box.",
-			type: "customList",
-			customListValueTitle: "Template name (no curly brackets)",
-			customListLabelTitle: "Text to show in warning list (also used as edit summary)"
 		}
 	]
 },
@@ -676,18 +588,12 @@ Twinkle.config.sections = [
 			type: "customList",
 			customListValueTitle: "Template name (no curly brackets)",
 			customListLabelTitle: "Text to show in Welcome dialog"
-		},
-		{
-			name: "customWelcomeSignature",
-			label: "Automatically sign custom welcome templates",
-			helptip: "If your custom welcome templates contain a built-in signature within the template, turn off this option.",
-			type: "boolean"
 		}
 	]
 },
 
 {
-	title: "XFD (deletion discussions)",
+	title: "Requests for deletion",
 	preferences: [
 		// TwinkleConfig.xfdWatchPage (string)
 		// The watchlist setting of the page being nominated for XfD. Either "yes" (add to watchlist), "no" (don't
@@ -706,7 +612,7 @@ Twinkle.config.sections = [
 		{
 			name: "xfdWatchDiscussion",
 			label: "Add the deletion discussion page to watchlist",
-			helptip: "This refers to the discussion subpage (for AfD and MfD) or the daily log page (for TfD, CfD, RfD and FfD)",
+			helptip: "This refers to the discussion subpage (at Wikipedia:Requests for deletion/Requests/<i>year</i>/<i>name</i>",
 			type: "enum",
 			enumValues: Twinkle.config.commonEnums.watchlist
 		},
@@ -717,8 +623,7 @@ Twinkle.config.sections = [
 		// Sorry in advance for any false positives.).
 		{
 			name: "xfdWatchList",
-			label: "Add the daily log/list page to the watchlist (where applicable)",
-			helptip: "This only applies for AfD and MfD, where the discussions are transcluded onto a daily log page (for AfD) or the main MfD page (for MfD).",
+			label: "Add the page <i>Wikipedia:Requests for deletion</i> to watchlist (that's where new RfDs will be listed)",
 			type: "enum",
 			enumValues: Twinkle.config.commonEnums.watchlist
 		},
@@ -799,21 +704,6 @@ Twinkle.config.sections = [
 		{
 			name: "batchUndeleteMinCutOff",
 			type: "integer"
-		},
-		// twinkledelimages.js: How many files should be processed at a time
-		{
-			name: "deliChunks",
-			type: "integer"
-		},
-		// twinkledelimages.js: How many files should be processed maximum
-		{
-			name: "deliMax",
-			type: "integer"
-		},
-		// twinkledeprod.js: How many pages should be processed at a time
-		{
-			name: "proddeleteChunks",
-			type: "integer"
 		}
 	]
 }
@@ -848,7 +738,7 @@ Twinkle.config.init = function twinkleconfigInit() {
 		// (settings in that file will still work, but they will be overwritten by twinkleoptions.js settings)
 		var contentnotice = document.createElement("p");
 		// I hate innerHTML, but this is one thing it *is* good for...
-		contentnotice.innerHTML = "<b>Before modifying your preferences here,</b> make sure you have removed any old <code>TwinkleConfig</code> and <code>FriendlyConfig</code> settings from your <a href=\"" + mw.util.wikiGetlink("Special:MyPage/skin.js") + "\" title=\"Special:MyPage/skin.js\">user JavaScript file</a>.";
+		contentnotice.innerHTML = "<b>Before modifying your preferences here,</b> make sure you have removed any old <code>TwinkleConfig</code> and <code>FriendlyConfig</code> settings from your <a href=\"" + mw.util.getUrl("Special:MyPage/skin.js") + "\" title=\"Special:MyPage/skin.js\">user JavaScript file</a>.";
 		contentdiv.appendChild(contentnotice);
 
 		// look and see if the user does in fact have any old settings in their skin JS file
@@ -1115,9 +1005,7 @@ Twinkle.config.init = function twinkleconfigInit() {
 
 				cell.style.color = "gray";
 				if (pref.helptip) {
-					// convert mentions of templates in the helptip to clickable links
-					cell.innerHTML = pref.helptip.replace(/{{(.+?)}}/g, 
-						'{{<a href="' + mw.util.wikiGetlink("Template:") + '$1" target="_blank">$1</a>}}');
+					cell.innerHTML = pref.helptip;
 				}
 				// add reset link (custom lists don't need this, as their config value isn't displayed on the form)
 				if (pref.type !== "customList") {
@@ -1192,7 +1080,7 @@ Twinkle.config.init = function twinkleconfigInit() {
 				box.appendChild(document.createTextNode("You can customize Twinkle to suit your preferences by using the "));
 			}
 			link = document.createElement("a");
-			link.setAttribute("href", mw.util.wikiGetlink(mw.config.get("wgFormattedNamespaces")[mw.config.get("wgNamespaceIds").project] + ":Twinkle/Preferences") );
+			link.setAttribute("href", mw.util.getUrl(mw.config.get("wgFormattedNamespaces")[mw.config.get("wgNamespaceIds").project] + ":Twinkle/Preferences") );
 			link.appendChild(document.createTextNode("Twinkle preferences panel"));
 			box.appendChild(link);
 			box.appendChild(document.createTextNode(", or by editing this page."));
@@ -1205,7 +1093,7 @@ Twinkle.config.init = function twinkleconfigInit() {
 
 			box.appendChild(document.createTextNode("If you want to set Twinkle preferences, you can use the "));
 			link = document.createElement("a");
-			link.setAttribute("href", mw.util.wikiGetlink(mw.config.get("wgFormattedNamespaces")[mw.config.get("wgNamespaceIds").project] + ":Twinkle/Preferences") );
+			link.setAttribute("href", mw.util.getUrl(mw.config.get("wgFormattedNamespaces")[mw.config.get("wgNamespaceIds").project] + ":Twinkle/Preferences") );
 			link.appendChild(document.createTextNode("Twinkle preferences panel"));
 			box.appendChild(link);
 			box.appendChild(document.createTextNode("."));
@@ -1497,91 +1385,6 @@ Twinkle.config.save = function twinkleconfigSave(e) {
 	return false;
 };
 
-// The JSON stringify method in the following code was excerpted from
-// http://www.JSON.org/json2.js
-// version of 2011-02-23
-
-// Douglas Crockford, the code's author, has released it into the Public Domain.
-// See http://www.JSON.org/js.html
-
-var JSON;
-if (!JSON) {
-	JSON = {};
-}
-
-(function() {
-	var escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
-		gap,
-		indent = '  ',  // hardcoded indent
-		meta = { '\b': '\\b', '\t': '\\t', '\n': '\\n', '\f': '\\f', '\r': '\\r', '"' : '\\"', '\\': '\\\\' };
-
-	function quote(string) {
-		escapable.lastIndex = 0;
-		return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-			var c = meta[a];
-			return typeof c === 'string' ? c :	'\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-		}) + '"' : '"' + string + '"';
-	}
-
-	function str(key, holder) {
-		var i, k, v, length, mind = gap, partial, value = holder[key];
-
-		if (value && typeof value === 'object' && $.isFunction(value.toJSON)) {
-			value = value.toJSON(key);
-		}
-
-		switch (typeof value) {
-		case 'string':
-			return quote(value);
-		case 'number':
-			return isFinite(value) ? String(value) : 'null';
-		case 'boolean':
-		case 'null':
-			return String(value);
-		case 'object':
-			if (!value) {
-				return 'null';
-			}
-			gap += indent;
-			partial = [];
-			if ($.isArray(value)) {
-				length = value.length;
-				for (i = 0; i < length; ++i) {
-					partial[i] = str(i, value) || 'null';
-				}
-				v = partial.length === 0 ? '[]' : gap ?
-					'[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']' :
-					'[' + partial.join(',') + ']';
-				gap = mind;
-				return v;
-			}
-			for (k in value) {
-				if (Object.prototype.hasOwnProperty.call(value, k)) {
-					v = str(k, value);
-					if (v) {
-						partial.push(quote(k) + (gap ? ': ' : ':') + v);
-					}
-				}
-			}
-			v = partial.length === 0 ? '{}' : gap ?
-				'{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}' :
-				'{' + partial.join(',') + '}';
-			gap = mind;
-			return v;
-		default:
-			throw new Error( "JSON.stringify: unknown data type" );
-		}
-	}
-
-	if (!$.isFunction(JSON.stringify)) {
-		JSON.stringify = function (value, ignoredParam1, ignoredParam2) {
-			ignoredParam1 = ignoredParam2;  // boredom
-			gap = '';
-			return str('', {'': value});
-		};
-	}
-}());
-
 Twinkle.config.writePrefs = function twinkleconfigWritePrefs(pageobj) {
 	var form = pageobj.getCallbackParameters();
 	var statelem = pageobj.getStatusElement();
@@ -1742,7 +1545,7 @@ Twinkle.config.saveSuccess = function twinkleconfigSaveSuccess(pageobj) {
 	noticebox.className = "successbox";
 	noticebox.style.fontSize = "100%";
 	noticebox.style.marginTop = "2em";
-	noticebox.innerHTML = "<p><b>Your Twinkle preferences have been saved.</b></p><p>To see the changes, you will need to <b>clear your browser cache entirely</b> (see <a href=\"" + mw.util.wikiGetlink("WP:BYPASS") + "\" title=\"WP:BYPASS\">WP:BYPASS</a> for instructions).</p>";
+	noticebox.innerHTML = "<p><b>Your Twinkle preferences have been saved.</b></p><p>To see the changes, you will need to <b>clear your browser cache entirely</b> (see <a href=\"" + mw.util.getUrl("WP:BYPASS") + "\" title=\"WP:BYPASS\">WP:BYPASS</a> for instructions).</p>";
 	Morebits.status.root.appendChild(noticebox);
 	var noticeclear = document.createElement("br");
 	noticeclear.style.clear = "both";

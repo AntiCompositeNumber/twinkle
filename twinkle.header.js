@@ -1,20 +1,16 @@
 /**
- * +-------------------------------------------------------------------------+
- * |                  === WARNING: GLOBAL GADGET FILE ===                    |
- * |                Changes to this page affect many users.                  |
- * |           Please discuss changes at [[WT:TW]] before editing.           |
- * +-------------------------------------------------------------------------+
+ * ------------------------------------------------------------------------------------------------------------
+ *   === WARNING: GADGET FILE === 
+ *   Changes to this page affect many users.
+ *   Please discuss changes at [[Wikipedia:Twinkle/Development]] before editing.
+ *   THIS IS A SPECIAL VERSION FOR SIMPLE ENGLISH WIKIPEDIA
+ * ------------------------------------------------------------------------------------------------------------
  *
- * Imported from github [https://github.com/azatoth/twinkle].
- * All changes should be made in the repository, otherwise they will be lost.
+ *   Visit [[:en:WP:TW]] for more information.
  *
- * To update this script from github, you must have a local repository set up. Then
- * follow the instructions at [https://github.com/azatoth/twinkle/blob/master/README.md].
- *
- * ----------
- *
- * This is AzaToth's Twinkle, the popular script sidekick for newbies, admins, and
- * every Wikipedian in between. Visit [[WP:TW]] for more information.
+ *   Main Twinkle script by AzaToth, Friendly scripts by Ioeth.
+ *   Customisation by EhJJ, renewed by intforce.
+ *   Special thanks to Osiris for his amazing support during the SEWP customisation progress.
  */
 
 //<nowiki>
@@ -23,9 +19,6 @@
 
 var Twinkle = {};
 window.Twinkle = Twinkle;  // allow global access
-
-// Check if account is experienced enough to use Twinkle
-var twinkleUserAuthorized = Morebits.userIsInGroup( "autoconfirmed" ) || Morebits.userIsInGroup( "confirmed" );
 
 // for use by custom modules (normally empty)
 Twinkle.initCallbacks = [];
@@ -57,41 +50,30 @@ Twinkle.defaultConfig.twinkle = {
 	offerReasonOnNormalRevert: true,
 	confirmOnFluff: false,
 	showRollbackLinks: [ "diff", "others" ],
-	 // DI (twinkleimage)
-	notifyUserOnDeli: true,
-	deliWatchPage: "default",
-	deliWatchUser: "default",
-	 // PROD
-	watchProdPages: true,
-	prodReasonDefault: "",
-	logProdPages: false,
-	prodLogPageName: "PROD log",
 	 // CSD
 	speedySelectionStyle: "buttonClick",
 	speedyPromptOnG7: false,
 	watchSpeedyPages: [ "g3", "g5", "g10", "g11", "g12" ],
 	markSpeedyPagesAsPatrolled: true,
 	// these next two should probably be identical by default
-	notifyUserOnSpeedyDeletionNomination:    [ "db", "g1", "g2", "g3", "g4", "g6", "g10", "g11", "g12", "g13", "a1", "a2", "a3", "a5", "a7", "a9", "a10", "f1", "f2", "f3", "f7", "f9", "f10", "u3", "t2", "t3", "p1", "p2" ],
-	welcomeUserOnSpeedyDeletionNotification: [ "db", "g1", "g2", "g3", "g4", "g6", "g10", "g11", "g12", "g13", "a1", "a2", "a3", "a5", "a7", "a9", "a10", "f1", "f2", "f3", "f7", "f9", "f10", "u3", "t2", "t3", "p1", "p2" ],
+	notifyUserOnSpeedyDeletionNomination:    [ "db", "g1", "g2", "g3", "g4", "g10", "g11", "g12", "a1", "a2", "a3", "a5", "a7", "a9", "a10", "f1", "f2", "f3", "f7", "f9", "f10", "u3", "t2", "t3", "p1", "p2" ],
+	welcomeUserOnSpeedyDeletionNotification: [ "db", "g1", "g2", "g3", "g4", "g10", "g11", "g12", "a1", "a2", "a3", "a5", "a7", "a9", "a10", "f1", "f2", "f3", "f7", "f9", "f10", "u3", "t2", "t3", "p1", "p2" ],
 	promptForSpeedyDeletionSummary: [ "db", "g1", "g2", "g3", "g4", "g6", "g7", "g8", "g10", "g11", "g12", "a1", "a2", "a3", "a5", "a7", "a9", "a10", "f2", "f4", "f7", "f8", "f10", "t2", "t3", "p1", "p2" ],
 	openUserTalkPageOnSpeedyDelete: [ "db", "g1", "g2", "g3", "g4", "g5", "g10", "g11", "g12", "a1", "a3", "a7", "a9", "a10", "f3", "f7", "f9", "u3", "t2", "p1" ],
 	deleteTalkPageOnDelete: false,
-	deleteRedirectsOnDelete: true,
 	deleteSysopDefaultToTag: false,
 	speedyWindowHeight: 500,
 	speedyWindowWidth: 800,
 	logSpeedyNominations: false,
-	speedyLogPageName: "CSD log",
+	speedyLogPageName: "QD log",
 	noLogOnSpeedyNomination: [ "u1" ],
 	 // Unlink
-	unlinkNamespaces: [ "0", "100" ],
+	unlinkNamespaces: [ "0" ],
 	 // Warn
 	defaultWarningGroup: "1",
 	showSharedIPNotice: true,
 	watchWarnings: true,
 	blankTalkpageOnIndefBlock: false,
-	customWarningList: [],
 	 // XfD
 	xfdWatchDiscussion: "default",
 	xfdWatchList: "no",
@@ -105,10 +87,7 @@ Twinkle.defaultConfig.twinkle = {
 	batchProtectChunks: 50,
 	batchProtectMinCutOff: 5,
 	batchundeleteChunks: 50,
-	batchUndeleteMinCutOff: 5,
-	deliChunks: 500,
-	deliMax: 5000,
-	proddeleteChunks: 50
+	batchUndeleteMinCutOff: 5
 };
 
 // now some skin dependent config.
@@ -130,11 +109,15 @@ Twinkle.defaultConfig.friendly = {
 	 // Tag
 	groupByDefault: true,
 	watchTaggedPages: true,
-	watchMergeDiscussions: true,
 	markTaggedPagesAsMinor: false,
 	markTaggedPagesAsPatrolled: true,
 	tagArticleSortOrder: "cat",
 	customTagList: [],
+	// Stub
+	watchStubbedPages: true,
+	markStubbedPagesAsMinor: false,
+	markStubbedPagesAsPatrolled: true,
+	stubArticleSortOrder: "cat",
 	 // Welcome
 	topWelcomes: false,
 	watchWelcomes: true,
@@ -145,7 +128,6 @@ Twinkle.defaultConfig.friendly = {
 	quickWelcomeMode: "norm",
 	quickWelcomeTemplate: "welcome",
 	customWelcomeList: [],
-	customWelcomeSignature: true,
 	 // Talkback
 	markTalkbackAsMinor: true,
 	insertTalkbackSignature: true,  // always sign talkback templates
@@ -198,14 +180,15 @@ Twinkle.getFriendlyPref = function twinkleGetFriendlyPref(name) {
  * portlet menu types all work slightly different.
  *
  * Available navigation areas depend on the skin used.
+ * Vector:
+ *  For each option, the outer div class contains "vector-menu", the inner div class is "vector-menu-content", and the ul is "vector-menu-content-list"
+ *  "mw-panel", outer div class contains "vector-menu-portal". Existing portlets/elements: "p-logo", "p-navigation", "p-interaction", "p-tb", "p-coll-print_export"
+ *  "left-navigation", outer div class contains "vector-menu-tabs" or "vector-menu-dropdown". Existing portlets: "p-namespaces", "p-variants" (menu)
+ *  "right-navigation", outer div class contains "vector-menu-tabs" or "vector-menu-dropdown". Existing portlets: "p-views", "p-cactions" (menu), "p-search"
+ *  Special layout of p-personal portlet (part of "head") through specialized styles.
  * Monobook:
  *  "column-one", outer div class "portlet", inner div class "pBody". Existing portlets: "p-cactions", "p-personal", "p-logo", "p-navigation", "p-search", "p-interaction", "p-tb", "p-coll-print_export"
  *  Special layout of p-cactions and p-personal through specialized styles.
- * Vector:
- *  "mw-panel", outer div class "portal", inner div class "body". Existing portlets/elements: "p-logo", "p-navigation", "p-interaction", "p-tb", "p-coll-print_export"
- *  "left-navigation", outer div class "vectorTabs" or "vectorMenu", inner div class "" or "menu". Existing portlets: "p-namespaces", "p-variants" (menu)
- *  "right-navigation", outer div class "vectorTabs" or "vectorMenu", inner div class "" or "menu". Existing portlets: "p-views", "p-cactions" (menu), "p-search"
- *  Special layout of p-personal portlet (part of "head") through specialized styles.
  * Modern:
  *  "mw_contentwrapper" (top nav), outer div class "portlet", inner div class "pBody". Existing portlets or elements: "p-cactions", "mw_content"
  *  "mw_portlets" (sidebar), outer div class "portlet", inner div class "pBody". Existing portlets: "p-navigation", "p-search", "p-interaction", "p-tb", "p-coll-print_export"
@@ -240,17 +223,17 @@ function twAddPortlet( navigation, id, text, type, nextnodeid )
 	}
 
 	//verify/normalize input
-	type = ( skin === "vector" && type === "menu" && ( navigation === "left-navigation" || navigation === "right-navigation" )) ? "menu" : "";
+	type = ( mw.config.get('skin') === "vector" && type === "menu" && ( navigation === "left-navigation" || navigation === "right-navigation" )) ? "menu" : "";
 	var outerDivClass;
 	var innerDivClass;
-	switch ( skin )
+	switch ( mw.config.get('skin') )
 	{
 		case "vector":
 			if ( navigation !== "portal" && navigation !== "left-navigation" && navigation !== "right-navigation" ) {
 				navigation = "mw-panel";
 			}
-			outerDivClass = ( navigation === "mw-panel" ) ? "portal" : ( type === "menu" ? "vectorMenu extraMenu" : "vectorTabs extraMenu" );
-			innerDivClass = ( navigation === "mw-panel" ) ? "body" : ( type === "menu" ? "menu" : "" );
+			outerDivClass = 'vector-menu vector-menu-' + (navigation === 'mw-panel' ? 'portal' : type === 'menu' ? 'dropdown vector-menu-dropdown-noicon' : 'tabs');
+			innerDivClass = 'vector-menu-content';
 			break;
 		case "modern":
 			if ( navigation !== "mw_portlets" && navigation !== "mw_contentwrapper" ) {
@@ -267,52 +250,61 @@ function twAddPortlet( navigation, id, text, type, nextnodeid )
 	}
 
 	// Build the DOM elements.
-	var outerDiv = document.createElement( "div" );
-	outerDiv.className = outerDivClass + " emptyPortlet";
+	var outerDiv = document.createElement('nav');
+	outerDiv.setAttribute('aria-labelledby', id + '-label');
+	// Vector getting vector-menu-empty FIXME TODO
+	outerDiv.className = outerDivClass + ' emptyPortlet';
 	outerDiv.id = id;
-	if ( type === "menu" ) {
-		// Fix drop-down arrow image in Vector skin
-		outerDiv.style.backgroundImage = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAQCAMAAAAlM38UAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA9QTFRFsbGxmpqa3d3deXl58/n79CzHcQAAAAV0Uk5T/////wD7tg5TAAAAMklEQVR42mJgwQoYBkqYiZEZAhiZUFRDxWGicEPA4nBRhNlAcYQokpVMDEwD6kuAAAMAyGMFQVv5ldcAAAAASUVORK5CYII=")';
-		outerDiv.style.backgroundPosition = "right 60%";
-	}
-	if ( nextnode && nextnode.parentNode === root ) {
-		root.insertBefore( outerDiv, nextnode );
+	if (nextnode && nextnode.parentNode === root) {
+		root.insertBefore(outerDiv, nextnode);
 	} else {
-		root.appendChild( outerDiv );
+		root.appendChild(outerDiv);
 	}
 
-	var h5 = document.createElement( "h3" );
-	if ( type === "menu" ) {
-		var span = document.createElement( "span" );
-		span.appendChild( document.createTextNode( text ) );
-		h5.appendChild( span );
+	var h3 = document.createElement('h3');
+	h3.id = id + '-label';
+	var ul = document.createElement('ul');
 
-		var a = document.createElement( "a" );
-		a.href = "#";
+	if (mw.config.get('skin') === 'vector') {
+		// add invisible checkbox to keep menu open when clicked
+		// similar to the p-cactions ("More") menu
+		if (outerDivClass.indexOf('vector-menu-dropdown') !== -1) {
+			var chkbox = document.createElement('input');
+			chkbox.className = 'vectorMenuCheckbox vector-menu-checkbox'; // remove vectorMenuCheckbox after 1.35-wmf.37 goes live
+			chkbox.setAttribute('type', 'checkbox');
+			chkbox.setAttribute('aria-labelledby', id + '-label');
+			outerDiv.appendChild(chkbox);
 
-		$( a ).click(function ( e ) {
-			e.preventDefault();
+			var span = document.createElement('span');
+			span.appendChild(document.createTextNode(text));
+			h3.appendChild(span);
 
-			if ( !twinkleUserAuthorized ) {
-				alert("Sorry, your account is too new to use Twinkle.");
-			}
-		});
+			var a = document.createElement('a');
+			a.href = '#';
 
-		span = document.createElement( "span" );
-		span.appendChild( document.createTextNode( text ) );
-		a.appendChild( span );
-		h5.appendChild( a );
+			$(a).click(function(e) {
+				e.preventDefault();
+			});
+
+			h3.appendChild(a);
+		}
+
+		outerDiv.appendChild(h3);
+		ul.className = 'menu vector-menu-content-list';  // remove menu after 1.35-wmf.37 goes live
 	} else {
-		h5.appendChild( document.createTextNode( text ) );
+		h3.appendChild(document.createTextNode(text));
+		outerDiv.appendChild(h3);
 	}
-	outerDiv.appendChild( h5 );
 
-	var innerDiv = document.createElement( "div" ); // Not strictly necessary with type vectorTabs, or other skins.
-	innerDiv.className = innerDivClass;
-	outerDiv.appendChild(innerDiv);
+	if (innerDivClass) {
+		var innerDiv = document.createElement('div');
+		innerDiv.className = innerDivClass;
+		innerDiv.appendChild(ul);
+		outerDiv.appendChild(innerDiv);
+	} else {
+		outerDiv.appendChild(ul);
+	}
 
-	var ul = document.createElement( "ul" );
-	innerDiv.appendChild( ul );
 
 	return outerDiv;
 }
@@ -329,11 +321,18 @@ function twAddPortletLink( task, text, id, tooltip )
 		twAddPortlet( Twinkle.getPref( "portletArea" ), Twinkle.getPref( "portletId" ), Twinkle.getPref( "portletName" ), Twinkle.getPref( "portletType" ), Twinkle.getPref( "portletNext" ));
 	}
 	var link = mw.util.addPortletLink( Twinkle.getPref( "portletId" ), typeof task === "string" ? task : "#", text, id, tooltip );
+	$('.client-js .skin-vector #p-cactions').css('margin-right', 'initial');
 	if ( $.isFunction( task ) ) {
 		$( link ).click(function ( ev ) {
 			task();
 			ev.preventDefault();
 		});
 	}
+	if ($.collapsibleTabs) {
+		$.collapsibleTabs.handleResize();
+	}
 	return link;
 }
+
+// Check if account is experienced enough to use Twinkle
+var twinkleUserAuthorized = Morebits.userIsInGroup( "autoconfirmed" ) || Morebits.userIsInGroup( "confirmed" );

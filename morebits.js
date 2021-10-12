@@ -15,11 +15,11 @@
  * Dependencies:
  *   - The whole thing relies on jQuery.  But most wikis should provide this by default.
  *   - Morebits.quickForm, Morebits.simpleWindow, and Morebits.status rely on the "morebits.css" file for their styling.
- *   - Morebits.simpleWindow relies on jquery UI Dialog (ResourceLoader module name 'jquery.ui.dialog').
+ *   - Morebits.simpleWindow relies on jquery UI Dialog (ResourceLoader module name 'jquery.ui').
  *   - Morebits.quickForm tooltips rely on Tipsy (ResourceLoader module name 'jquery.tipsy').
  *     For external installations, Tipsy is available at [http://onehackoranother.com/projects/jquery/tipsy].
  *   - To create a gadget based on morebits.js, use this syntax in MediaWiki:Gadgets-definition:
- *       * GadgetName[ResourceLoader|dependencies=mediawiki.util,jquery.ui.dialog,jquery.tipsy]|morebits.js|morebits.css|GadgetName.js
+ *       * GadgetName[ResourceLoader|dependencies=mediawiki.util,jquery.ui,jquery.tipsy]|morebits.js|morebits.css|GadgetName.js
  *
  * Most of the stuff here doesn't work on IE < 9.  It is your script's responsibility to enforce this.
  *
@@ -51,19 +51,68 @@ Morebits.userIsInGroup = function ( group ) {
  * **************** Morebits.isIPAddress() ****************
  * Helper function: Returns true if given string contains a valid IPv4 or
  * IPv6 address
- *
- * This is copied from mediaWiki.util
  */
 
-Morebits.RE_IP_ADD = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|0?[0-9]?[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|0?[0-9]?[0-9])$/;
-Morebits.RE_IPV6_ADD = /^(?::(?::|(?::[0-9A-Fa-f]{1,4}){1,7})|[0-9A-Fa-f]{1,4}(?::[0-9A-Fa-f]{1,4}){0,6}::|[0-9A-Fa-f]{1,4}(?::[0-9A-Fa-f]{1,4}){7})$/;
-Morebits.RE_IPV6_ADD2 = /^[0-9A-Fa-f]{1,4}(?:::?[0-9A-Fa-f]{1,4}){1,6}$/;
-
 Morebits.isIPAddress = function ( address ) {
-	return address.search( Morebits.RE_IP_ADD ) !== -1 ||  // IPv4
-		address.search( Morebits.RE_IPV6_ADD ) !== -1 ||  // IPv6
-		(address.search( Morebits.RE_IPV6_ADD2 ) !== -1	&& address.search( /::/ ) !== -1 && address.search( /::.*::/ ) === -1);
-}
+	return mw.util.isIPv4Address(address) || mw.util.isIPv6Address(address);
+};
+
+
+
+/**
+ * **************** Morebits.sanitizeIPv6() ****************
+ * JavaScript translation of the MediaWiki core function IP::sanitizeIP() in
+ * includes/utils/IP.php.
+ * Converts an IPv6 address to the canonical form stored and used by MediaWiki.
+ */
+
+Morebits.sanitizeIPv6 = function ( address ) {
+	address = address.trim();
+	if ( address === '' ) {
+		return null;
+	}
+	if ( mw.util.isIPv4Address( address ) || !mw.util.isIPv6Address( address ) ) {
+		return address; // nothing else to do for IPv4 addresses or invalid ones
+	}
+	// Remove any whitespaces, convert to upper case
+	address = address.toUpperCase();
+	// Expand zero abbreviations
+	var abbrevPos = address.indexOf( '::' );
+	if ( abbrevPos > -1 ) {
+		// We know this is valid IPv6. Find the last index of the
+		// address before any CIDR number (e.g. "a:b:c::/24").
+		var CIDRStart = address.indexOf( '/' );
+		var addressEnd = ( CIDRStart > -1 ) ? CIDRStart - 1 : address.length - 1;
+		// If the '::' is at the beginning...
+		var repeat, extra, pad;
+		if ( abbrevPos === 0 ) {
+			repeat = '0:';
+			extra = ( address == '::' ) ? '0' : ''; // for the address '::'
+			pad = 9; // 7+2 (due to '::')
+		// If the '::' is at the end...
+		} else if ( abbrevPos === ( addressEnd - 1 ) ) {
+			repeat = ':0';
+			extra = '';
+			pad = 9; // 7+2 (due to '::')
+		// If the '::' is in the middle...
+		} else {
+			repeat = ':0';
+			extra = ':';
+			pad = 8; // 6+2 (due to '::')
+		}
+		var replacement = repeat;
+		pad -= address.split( ':' ).length - 1;
+		for ( var i = 1; i < pad; i++ ) {
+			replacement += repeat;
+		}
+		replacement += extra;
+		address = address.replace( '::', replacement );
+	}
+	// Remove leading zeros from each bloc as needed
+	address = address.replace( /(^|:)0+([0-9A-Fa-f]{1,4})/g, '$1$2' );
+
+	return address;
+};
 
 
 
@@ -800,7 +849,7 @@ HTMLFormElement.prototype.getChecked = function( name, type ) {
 
 RegExp.escape = function( text, space_fix ) {
 
-	text = $.escapeRE(text);
+	text = mw.RegExp.escape(text);
 
 	// Special MediaWiki escape - underscore/space are often equivalent
 	if( space_fix ) {
@@ -1055,7 +1104,7 @@ Morebits.getPageAssociatedUser = function(){
 	}
 
 	if ( thisNamespaceId === -1 /* Special: */ && mw.config.get('wgCanonicalSpecialPageName') === "Contributions" ) {
-		return $('table.mw-contributions-table input[name="target"]')[0].getAttribute('value');
+		return mw.config.get("wgRelevantUserName");
 	}
 
 	return false;
@@ -1284,7 +1333,7 @@ Morebits.wiki.actionCompleted.event = function() {
 	if( Morebits.wiki.actionCompleted.redirect ) {
 		// if it isn't a URL, make it one. TODO: This breaks on the articles 'http://', 'ftp://', and similar ones.
 		if( !( (/^\w+\:\/\//).test( Morebits.wiki.actionCompleted.redirect ) ) ) {
-			Morebits.wiki.actionCompleted.redirect = mw.util.wikiGetlink( Morebits.wiki.actionCompleted.redirect );
+			Morebits.wiki.actionCompleted.redirect = mw.util.getUrl( Morebits.wiki.actionCompleted.redirect );
 			if( Morebits.wiki.actionCompleted.followRedirect === false ) {
 				Morebits.wiki.actionCompleted.redirect += "?redirect=no";
 			}
@@ -1323,6 +1372,7 @@ Morebits.wiki.api = function( currentAction, query, onSuccess, statusElement, on
 	this.currentAction = currentAction;
 	this.query = query;
 	this.query.format = 'xml';
+	this.query.assert = 'user';
 	this.onSuccess = onSuccess;
 	this.onError = onError;
 	if( statusElement ) {
@@ -1358,6 +1408,9 @@ Morebits.wiki.api.prototype = {
 			url: mw.util.wikiScript('api'),
 			data: Morebits.queryString.create(this.query),
 			datatype: 'xml',
+			headers: {
+				'Api-User-Agent': morebitsWikiApiUserAgent
+			},
 
 			success: function(xml, statusText, jqXHR) {
 				this.statusText = statusText;
@@ -1426,6 +1479,15 @@ Morebits.wiki.api.prototype = {
 	getXML: function() {
 		return this.responseXML;
 	}
+};
+
+// Custom user agent header, used by WMF for server-side logging
+// See https://lists.wikimedia.org/pipermail/mediawiki-api-announce/2014-November/000075.html
+var morebitsWikiApiUserAgent = 'morebits.js/2.0 ([[w:WT:TW]])';
+
+// Sets the custom user agent header
+Morebits.wiki.api.setApiUserAgent = function( ua ) {
+	morebitsWikiApiUserAgent = ( ua ? ua + ' ' : '' ) + 'morebits.js/2.0 ([[w:WT:TW]])';
 };
 
 
@@ -1567,7 +1629,7 @@ Morebits.wiki.api.prototype = {
  * 
  * getCreator(): returns the user who created the page following lookupCreator()
  *
- * patrol(): marks the page as patrolled, if possible
+ * patrol(): marks the page as patrolled (only when "rcid" is present in the query string)
  *
  * move(onSuccess, onFailure): Moves a page to another title
  *
@@ -1988,27 +2050,29 @@ Morebits.wiki.page = function(pageName, currentAction) {
 	};
 
 	this.patrol = function() {
-		// There's no patrol link on page, so we can't patrol
-		if ( !$( '.patrollink' ).length ) {
+		// look for rcid in querystring; if not, we won't have a patrol token, so no point trying
+		if (!Morebits.queryString.exists("rcid")) {
 			return;
 		}
+		var rcid = Morebits.queryString.get("rcid");
 
-		// Extract the rcid token from the "Mark page as patrolled" link on page
-		var patrolhref = $( '.patrollink a' ).attr( 'href' ),
-			rcid = mw.util.getParamValue( 'rcid', patrolhref );
+		// extract patrol token from "Mark page as patrolled" link on page
+		var patrollinkmatch = /token=(.+)%2B%5C$/.exec($(".patrollink a").attr("href"));
+		if (patrollinkmatch) {
+			var patroltoken = patrollinkmatch[1] + "+\\";
+			var patrolstat = new Morebits.status("Marking page as patrolled");
 
-		if ( rcid ) {
-
-			var patrolstat = new Morebits.status( 'Marking page as patrolled' );
-
-			var wikipedia_api = new Morebits.wiki.api( 'doing...', {
-				action: 'patrol',
+			var wikipedia_api = new Morebits.wiki.api("doing...", {
+				title: ctx.pageName,
+				action: 'markpatrolled',
 				rcid: rcid,
-				token: mw.user.tokens.get( 'patrolToken' )
-			}, null, patrolstat );
-
-			// We don't really care about the response
-			wikipedia_api.post();
+				token: patroltoken
+			}, null, patrolstat);
+			wikipedia_api.post({
+				type: 'GET',
+				url: mw.util.wikiScript('index'),
+				datatype: 'text'  // we don't really care about the response
+			});
 		}
 	};
 
@@ -2204,7 +2268,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 			}
 		}
 
-		ctx.editToken = $(xml).find('page').attr('edittoken');
+		ctx.editToken = $(xml).find('tokens').attr('csrftoken');
 		if (!ctx.editToken)
 		{
 			ctx.statusElement.error("Failed to retrieve edit token.");
@@ -2293,7 +2357,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 			// real success
 			// default on success action - display link for edited page
 			var link = document.createElement('a');
-			link.setAttribute('href', mw.util.wikiGetlink(ctx.pageName) );
+			link.setAttribute('href', mw.util.getUrl(ctx.pageName) );
 			link.appendChild(document.createTextNode(ctx.pageName));
 			ctx.statusElement.info(['completed (', link, ')']);
 			if (ctx.onSaveSuccess) {
@@ -2575,7 +2639,7 @@ Morebits.wiki.page = function(pageName, currentAction) {
 			return;
 		}
 
-		var stabilizeToken = $(xml).find('page').attr('edittoken');
+		var stabilizeToken = $(xml).find('tokens').attr('csrftoken');
 		if (!stabilizeToken) {
 			ctx.statusElement.error("Failed to retrieve stabilize token.");
 			ctx.onStabilizeFailure(this);
@@ -2807,7 +2871,7 @@ Morebits.wikitext.page.prototype = {
 		 * Will eat the whole line.
 		 */
 		var gallery_image_re = new RegExp( "(^\\s*(?:[Ii]mage|[Ff]ile):\\s*" + image_re_string + ".*?$)", 'mg' );
-		unbinder.content = unbinder.content.replace( gallery_image_re, "<!-- " + reason + "$1 -->" );
+		unbinder.content.replace( gallery_image_re, "<!-- " + reason + "$1 -->" );
 
 		// unbind the newly created comments
 		unbinder.unbind( '<!--', '-->' );
@@ -2816,7 +2880,7 @@ Morebits.wikitext.page.prototype = {
 		 * Will only eat the image name and the preceeding bar and an eventual named parameter
 		 */
 		var free_image_re = new RegExp( "(\\|\\s*(?:[\\w\\s]+\\=)?\\s*(?:(?:[Ii]mage|[Ff]ile):\\s*)?" + image_re_string + ")", 'mg' );
-		unbinder.content = unbinder.content.replace( free_image_re, "<!-- " + reason + "$1 -->" );
+		unbinder.content.replace( free_image_re, "<!-- " + reason + "$1 -->" );
 
 		// Rebind the content now, we are done!
 		this.text = unbinder.rebind();
@@ -3317,7 +3381,7 @@ Morebits.simpleWindow.prototype = {
 			$footerlinks.append(bullet);
 		}
 		var link = document.createElement("a");
-		link.setAttribute("href", mw.util.wikiGetlink(wikiPage) );
+		link.setAttribute("href", mw.util.getUrl(wikiPage) );
 		link.setAttribute("title", wikiPage);
 		link.setAttribute("target", "_blank");
 		link.textContent = text;

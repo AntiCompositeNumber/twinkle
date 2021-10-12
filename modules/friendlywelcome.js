@@ -79,8 +79,7 @@ Twinkle.welcome.normal = function() {
 };
 
 Twinkle.welcome.welcomeUser = function welcomeUser() {
-	Morebits.status.init( document.getElementById('mw-content-text') );
-	$( '#catlinks' ).remove();
+	Morebits.status.init( document.getElementById('bodyContent') );
 
 	var params = {
 		value: Twinkle.getFriendlyPref('quickWelcomeTemplate'),
@@ -105,7 +104,6 @@ Twinkle.welcome.callback = function friendlywelcomeCallback( uid ) {
 	var Window = new Morebits.simpleWindow( 600, 420 );
 	Window.setTitle( "Welcome user" );
 	Window.setScriptName( "Twinkle" );
-	Window.addFooterLink( "Welcoming Committee", "WP:WC" );
 	Window.addFooterLink( "Twinkle help", "WP:TW/DOC#welcome" );
 
 	var form = new Morebits.quickForm( Twinkle.welcome.callback.evaluate );
@@ -117,9 +115,7 @@ Twinkle.welcome.callback = function friendlywelcomeCallback( uid ) {
 			event: Twinkle.welcome.populateWelcomeList,
 			list: [
 				{ type: 'option', value: 'standard', label: 'Standard welcomes', selected: !Morebits.isIPAddress(mw.config.get('wgTitle')) },
-				{ type: 'option', value: 'anonymous', label: 'IP user welcomes', selected: Morebits.isIPAddress(mw.config.get('wgTitle')) },
-				{ type: 'option', value: 'wikiProject', label: 'WikiProject welcomes' },
-				{ type: 'option', value: 'nonEnglish', label: 'Non-English welcomes' }
+				{ type: 'option', value: 'anonymous', label: 'Problem user welcomes', selected: Morebits.isIPAddress(mw.config.get('wgTitle')) }
 			]
 		});
 
@@ -164,7 +160,7 @@ Twinkle.welcome.populateWelcomeList = function(e) {
 
 	if ((type === "standard" || type === "anonymous") && Twinkle.getFriendlyPref("customWelcomeList").length) {
 		div.append({ type: 'header', label: 'Custom welcome templates' });
-		div.append({ 
+		div.append({
 			type: 'radio',
 			name: 'template',
 			list: Twinkle.getFriendlyPref("customWelcomeList"),
@@ -173,12 +169,12 @@ Twinkle.welcome.populateWelcomeList = function(e) {
 	}
 
 	var appendTemplates = function(list) {
-		div.append({ 
+		div.append({
 			type: 'radio',
 			name: 'template',
 			list: list.map(function(obj) {
 				var properties = Twinkle.welcome.templates[obj];
-				var result = (properties ? { 
+				var result = (properties ? {
 					value: obj,
 					label: "{{" + obj + "}}: " + properties.description + (properties.linkedArticle ? "\u00A0*" : ""),  // U+00A0 NO-BREAK SPACE
 					tooltip: properties.tooltip  // may be undefined
@@ -197,85 +193,24 @@ Twinkle.welcome.populateWelcomeList = function(e) {
 			div.append({ type: 'header', label: 'General welcome templates' });
 			appendTemplates([
 				"welcome",
-				"welcome-short",
+				"welcome2",
+				"welcome-anon",
+				"welcome-anon2",
+				"welcome-en",
+				"welcome-iw",
+				"welcomeg",
+				"welcomeq",
 				"welcome-personal",
-				"welcome-graphical",
-				"welcome-menu",
-				"welcome-screen",
-				"welcome-belated",
-				"welcome student",
-				"welcome teacher"
-			]);
-			div.append({ type: 'header', label: 'Problem user welcome templates' });
-			appendTemplates([
-				"welcomelaws",
-				"first article",
-				"welcomevandal",
-				"welcomenpov",
-				"welcomespam",
-				"welcomeunsourced",
-				"welcomeauto",
-				"welcome-COI",
-				"welcome-image"
+				"welcome-school"
 			]);
 			break;
 		case "anonymous":
-			div.append({ type: 'header', label: 'Anonymous user welcome templates' });
+			div.append({ type: 'header', label: 'Problem user welcome templates' });
 			appendTemplates([
-				"welcome-anon",
-				"welcome-anon-border",
-				"welcome-anon-test",
-				"welcome-anon-vandal",
-				"welcome-anon-constructive"
-			]);
-			break;
-		case "wikiProject":
-			div.append({ type: 'header', label: 'WikiProject-specific welcome templates' });
-			appendTemplates([
-				"welcome-au",
-				"welcome-bio",
-				"welcome-cal",
-				"welcome-conserv",
-				"welcome-cycling",
-				"welcome-dbz",
-				"welcome-et",
-				"welcome-in",
-				"welcome-de",
-				"welcome-math",
-				"welcome-med",
-				"welcome-no",
-				"welcome-pk",
-				"welcome-phys",
-				"welcome-pl",
-				"welcome-roads",
-				"welcome-rugbyunion",
-				"welcome-ru",
-				"welcome-starwars",
-				"welcome-ch",
-				"welcome-uk",
-				"welcome-videogames"
-			]);
-			break;
-		case "nonEnglish":
-			div.append({ type: 'header', label: 'Non-English welcome templates' });
-			appendTemplates([
-				"welcomeen-sq",
-				"welcomeen-zh",
-				"welcomeen-nl",
-				"welcomeen-fi",
-				"welcomeen-fr",
-				"welcomeen-de",
-				"welcomeen-he",
-				"welcomeen-ja",
-				"welcomeen-ko",
-				"welcomeen-mr",
-				"welcomeen-ml",
-				"welcomeen-or",
-				"welcomeen-pt",
-				"welcomeen-ru",
-				"welcomeen-es",
-				"welcomeen-sv",
-				"welcomeen-uk"
+				"firstarticle",
+				"welcomespam",
+				"welcomenpov",
+				"welcomevandal"
 			]);
 			break;
 		default:
@@ -308,323 +243,77 @@ Twinkle.welcome.selectTemplate = function(e) {
 
 Twinkle.welcome.templates = {
 	"welcome": {
-		description: "standard welcome",
+		description: "standard plain text welcome",
 		linkedArticle: true,
-		syntax: "{{subst:welcome|$USERNAME$|art=$ARTICLE$}} ~~~~"
+		syntax: "$HEADER$ {{subst:welcome|$USERNAME$|art=$ARTICLE$}} ~~~~"
 	},
-	"welcome-short": {
-		description: "a shorter welcome message",
+	"welcome2": {
+		description: "welcome with graphic and orange color sheme",
+		linkedArticle: true,
+		syntax: "$HEADER$ {{subst:welcome2|~~~~|art=$ARTICLE$}}"
+	},
+	"welcome-anon": {
+		description: "welcome anonymous user and suggest getting a username",
+		linkedArticle: true,
+		syntax: "$HEADER$ {{subst:welcome-anon|$USERNAME$|art=$ARTICLE$}} ~~~~"
+	},
+	"welcome-anon2": {
+		description: "like welcome-anon, but with table and colors",
+		linkedArticle: true,
+		syntax: "$HEADER$ {{subst:welcome-anon2|$USERNAME$|art=$ARTICLE$}}"
+	},
+	"welcome-en": {
+		description: "welcome for users from main English Wikipedia",
 		linkedArticle: false,
-		syntax: "{{subst:welcome-short|$USERNAME$}} $EXTRA$ ~~~~"
+		syntax: "$HEADER$ {{subst:welcome-en}} ~~~~"
+	},
+	"welcome-iw": {
+		description: "welcome users from another Wikipedia",
+		linkedArticle: false,
+		syntax: "$HEADER$ {{subst:welcome-iw}} ~~~~"
+	},
+	"welcomeg": {
+		description: "welcome with blue background",
+		linkedArticle: true,
+		syntax: "{{subst:welcomeg|$USERNAME$|art=$ARTICLE$}} ~~~~"
+	},
+	"welcomeq": {
+		description: "like welcomeg but a bit shorter",
+		linkedArticle: true,
+		syntax: "{{subst:welcomeq|$USERNAME$|art=$ARTICLE$}} ~~~~"
 	},
 	"welcome-personal": {
-		description: "more personal welcome, including a plate of cookies",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-personal|$USERNAME$}} ~~~~"
-	},
-	"welcome-graphical": {
-		description: "colorful welcome message with table of about 20 links",
-		linkedArticle: false,
-		syntax: "$HEADER$ {{subst:welcome-graphical|$EXTRA$}}"
-	},
-	"welcome-menu": {
-		description: "welcome message with large table of about 60 links",
-		linkedArticle: false,
-		syntax: "$HEADER$ {{subst:welcome-menu}}"
-	},
-	"welcome-screen": {
-		description: "welcome message with clear, annotated table of 10 links",
-		linkedArticle: false,
-		syntax: "$HEADER$ {{subst:welcome-screen}}"
-	},
-	"welcome-belated": {
-		description: "welcome for users with more substantial contributions",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-belated|$USERNAME$}}"
-	},
-	"welcome student": {
-		description: "welcome for students editing as part of an educational class project",
-		linkedArticle: false,
-		syntax: "$HEADER$ {{subst:welcome student|$USERNAME$}} ~~~~"
-	},
-	"welcome teacher": {
-		description: "welcome for course instructors involved in an educational class project",
-		linkedArticle: false,
-		syntax: "$HEADER$ {{subst:welcome teacher|$USERNAME$}} ~~~~"
-	},
-	"welcomelaws": {
-		description: "welcome with information about copyrights, NPOV, the sandbox, and vandalism",
-		linkedArticle: false,
-		syntax: "{{subst:welcomelaws|$USERNAME$}} ~~~~"
-	},
-	"first article": {
-		description: "for someone whose first article did not meet page creation guidelines",
+		description: "a more personal welcome with a plate of cookies",
 		linkedArticle: true,
-		syntax: "{{subst:first article|$ARTICLE$|$USERNAME$}}"
+		syntax: "{{subst:welcome-personal|$USERNAME$|art=$ARTICLE$}} ~~~~"
 	},
-	"welcomevandal": {
-		description: "for someone whose initial efforts appear to be vandalism",
-		linkedArticle: true,
-		syntax: "{{subst:welcomevandal|$ARTICLE$|$USERNAME$}}"
+	"welcome-school": {
+		description: "for welcoming students participating in a class project",
+		linkedArticle: false,
+		syntax: "{{subst:welcome-school}} ~~~~"
 	},
-	"welcomenpov": {
-		description: "for someone whose initial efforts do not adhere to the neutral point of view policy",
+
+	// second group
+
+	"firstarticle": {
+		description: "welcome with note that created page may get deleted",
 		linkedArticle: true,
-		syntax: "{{subst:welcomenpov|$ARTICLE$|$USERNAME$}} ~~~~"
+		syntax: "$HEADER$ {{subst:firstarticle|1=$ARTICLE$}} ~~~~"
 	},
 	"welcomespam": {
-		description: "welcome with additional discussion of anti-spamming policies",
+		description: "welcome users which did spam changes",
 		linkedArticle: true,
-		syntax: "{{subst:welcomespam|$ARTICLE$|$USERNAME$}} ~~~~"
+		syntax: "$HEADER$ {{subst:welcomespam|art=$ARTICLE$}} ~~~~"
 	},
-	"welcomeunsourced": {
-		description: "for someone whose initial efforts are unsourced",
+	"welcomenpov": {
+		description: "welcome with warning to make changes that fit the NPOV requirements",
 		linkedArticle: true,
-		syntax: "{{subst:welcomeunsourced|$ARTICLE$|$USERNAME$}} ~~~~"
+		syntax: "$HEADER$ {{subst:welcomenpov|$ARTICLE$}} ~~~~"
 	},
-	"welcomeauto": {
-		description: "for someone who created an autobiographical article",
+	"welcomevandal": {
+		description: "welcome user which performed vandalism",
 		linkedArticle: true,
-		syntax: "{{subst:welcomeauto|$USERNAME$|art=$ARTICLE$}} ~~~~"
-	},
-	"welcome-COI": {
-		description: "for someone who has edited in areas where they may have a conflict of interest",
-		linkedArticle: true,
-		syntax: "{{subst:welcome-COI|$USERNAME$|art=$ARTICLE$}} ~~~~"
-	},
-	"welcome-image": {
-		description: "welcome with additional information about images (policy and procedure)",
-		linkedArticle: true,
-		syntax: "{{subst:welcome-image}}"
-	},
-
-	// ANONYMOUS USER WELCOMES
-
-	"welcome-anon": {
-		description: "for anonymous users; encourages creating an account",
-		linkedArticle: true,
-		syntax: "{{subst:welcome-anon|art=$ARTICLE$}} ~~~~"
-	},
-	"welcome-anon-border": {
-		description: "similar to {{welcome-anon}}, but has a border and uses clearer language",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-anon-border}}"
-	},
-	"welcome-anon-test": {
-		description: "for anonymous users who have performed test edits",
-		linkedArticle: true,
-		syntax: "{{subst:welcome-anon-test|$ARTICLE$|$USERNAME$}} ~~~~"
-	},
-	"welcome-anon-vandal": {
-		description: "for anonymous users who have vandalized a page",
-		linkedArticle: true,
-		syntax: "{{subst:welcome-anon-vandal|$ARTICLE$|$USERNAME$}}"
-	},
-	"welcome-anon-constructive": {
-		description: "for anonymous users who fight vandalism and edit constructively",
-		linkedArticle: true,
-		syntax: "{{subst:welcome-anon-constructive|art=$ARTICLE$}}"
-	},
-
-	// WIKIPROJECT-SPECIFIC WELCOMES
-
-	"welcome-au": {
-		description: "welcome for users with an apparent interest in Australia topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-au}} ~~~~"
-	},
-	"welcome-bio": {
-		description: "welcome for users with an apparent interest in biographical topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-bio}} ~~~~"
-	},
-	"welcome-cal": {
-		description: "welcome for users with an apparent interest in California topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-cal}} ~~~~"
-	},
-	"welcome-conserv": {
-		description: "welcome for users with an apparent interest in conservatism topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-conserv}}"
-	},
-	"welcome-cycling": {
-		description: "welcome for users with an apparent interest in cycling topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-cycling}} ~~~~"
-	},
-	"welcome-dbz": {
-		description: "welcome for users with an apparent interest in Dragon Ball topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-dbz}}"
-	},
-	"welcome-et": {
-		description: "welcome for users with an apparent interest in Estonia topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-et}}"
-	},
-	"welcome-in": {
-		description: "welcome for users with an apparent interest in India topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-in}} ~~~~"
-	},
-	"welcome-de": {
-		description: "welcome for users with an apparent interest in Germany topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-de}} ~~~~"
-	},
-	"welcome-math": {
-		description: "welcome for users with an apparent interest in mathematical topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-math}} ~~~~"
-	},
-	"welcome-med": {
-		description: "welcome for users with an apparent interest in medicine topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-med}} ~~~~"
-	},
-	"welcome-no": {
-		description: "welcome for users with an apparent interest in Norway topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-no}} ~~~~"
-	},
-	"welcome-pk": {
-		description: "welcome for users with an apparent interest in Pakistan topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-pk}} ~~~~"
-	},
-	"welcome-phys": {
-		description: "welcome for users with an apparent interest in physics topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-phys}} ~~~~"
-	},
-	"welcome-pl": {
-		description: "welcome for users with an apparent interest in Poland topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-pl}} ~~~~"
-	},
-	"welcome-rugbyunion": {
-		description: "welcome for users with an apparent interest in rugby union topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-rugbyunion}} ~~~~"
-	},
-	"welcome-ru": {
-		description: "welcome for users with an apparent interest in Russia topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-ru}} ~~~~"
-	},
-	"welcome-starwars": {
-		description: "welcome for users with an apparent interest in Star Wars topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-starwars}} ~~~~"
-	},
-	"welcome-ch": {
-		description: "welcome for users with an apparent interest in Switzerland topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-ch}} ~~~~"
-	},
-	"welcome-uk": {
-		description: "welcome for users with an apparent interest in Ukraine topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-uk}} ~~~~"
-	},
-	"welcome-roads": {
-		description: "welcome for users with an apparent interest in roads and highways topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-roads}}"
-	},
-	"welcome-videogames": {
-		description: "welcome for users with an apparent interest in video game topics",
-		linkedArticle: false,
-		syntax: "{{subst:welcome-videogames}}"
-	},
-
-	// NON-ENGLISH WELCOMES
-
-	"welcomeen-sq": {
-		description: "welcome for users whose first language appears to be Albanian",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-sq}}"
-	},
-	"welcomeen-zh": {
-		description: "welcome for users whose first language appears to be Chinese",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-zh}}"
-	},
-	"welcomeen-nl": {
-		description: "welcome for users whose first language appears to be Dutch",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-nl}}"
-	},
-	"welcomeen-fi": {
-		description: "welcome for users whose first language appears to be Finnish",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-fi}}"
-	},
-	"welcomeen-fr": {
-		description: "welcome for users whose first language appears to be French",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-fr}}"
-	},
-	"welcomeen-de": {
-		description: "welcome for users whose first language appears to be German",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-de}}"
-	},
-	"welcomeen-he": {
-		description: "welcome for users whose first language appears to be Hebrew",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-he}}"
-	},
-	"welcomeen-ja": {
-		description: "welcome for users whose first language appears to be Japanese",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-ja}}"
-	},
-	"welcomeen-ko": {
-		description: "welcome for users whose first language appears to be Korean",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-ko}}"
-	},
-	"welcomeen-mr": {
-		description: "welcome for users whose first language appears to be Marathi",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-mr}}"
-	},
-	"welcomeen-ml": {
-		description: "welcome for users whose first language appears to be Malayalam",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-ml}}"
-	},
-	"welcomeen-or": {
-		description: "welcome for users whose first language appears to be Oriya (Odia)",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-or}}"
-	},
-	"welcomeen-pt": {
-		description: "welcome for users whose first language appears to be Portuguese",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-pt}}"
-	},
-	"welcomeen-ru": {
-		description: "welcome for users whose first language appears to be Russian",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-ru}}"
-	},
-	"welcomeen-es": {
-		description: "welcome for users whose first language appears to be Spanish",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-es}}"
-	},
-	"welcomeen-sv": {
-		description: "welcome for users whose first language appears to be Swedish",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-sv}}"
-	},
-	"welcomeen-uk": {
-		description: "welcome for users whose first language appears to be Ukrainian",
-		linkedArticle: false,
-		syntax: "{{subst:welcomeen-uk}}"
+		syntax: "$HEADER$ {{subst:welcomevandal|$ARTICLE$}} ~~~~"
 	}
 };
 
@@ -637,8 +326,7 @@ Twinkle.welcome.getTemplateWikitext = function(template, article) {
 			replace(/\$HEADER\$\s*/, "== Welcome ==\n\n").
 			replace("$EXTRA$", "");  // EXTRA is not implemented yet
 	} else {
-		return "{{subst:" + template + (article ? ("|art=" + article) : "") + "}}" + 
-			(Twinkle.getFriendlyPref("customWelcomeSignature") ? " ~~~~" : "");
+		return "{{subst:" + template + (article ? ("|art=" + article) : "") + "}} ~~~~";
 	}
 };
 

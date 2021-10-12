@@ -3,14 +3,15 @@
  *** twinklebatchundelete.js: Batch undelete module
  ****************************************
  * Mode of invocation:     Tab ("Und-batch")
- * Active on:              Existing user pages
+ * Active on:              Existing and non-existing user pages (??? why?)
  * Config directives in:   TwinkleConfig
  */
 
+// XXX TODO this module needs to be overhauled to use Morebits.wiki.page
+
 
 Twinkle.batchundelete = function twinklebatchundelete() {
-	if( mw.config.get("wgNamespaceNumber") !== mw.config.get("wgNamespaceIds").user || 
-		!mw.config.get("wgArticleId") ) {
+	if( mw.config.get("wgNamespaceNumber") !== mw.config.get("wgNamespaceIds").user ) {
 		return;
 	}
 	if( Morebits.userIsInGroup( 'sysop' ) ) {
@@ -101,16 +102,16 @@ Twinkle.batchundelete.callbacks = {
 			Twinkle.batchundelete.currentUndeleteCounter += pages.length;
 			for( var i = 0; i < pages.length; ++i ) {
 				var title = pages[i];
-				var query = { 
-					'token': mw.user.tokens.get().editToken,
+				var query = {
+					'token': mw.user.tokens.get().csrfToken,
 					'title': title,
 					'action': 'undelete',
 					'reason': reason + Twinkle.getPref('deletionSummaryAd')
 				};
-				var wikipedia_api = new Morebits.wiki.api( "Undeleting " + title, query, function( self ) { 
+				var wikipedia_api = new Morebits.wiki.api( "Undeleting " + title, query, function( self ) {
 						--Twinkle.batchundelete.currentUndeleteCounter;
 						var link = document.createElement( 'a' );
-						link.setAttribute( 'href', mw.util.wikiGetlink(self.itsTitle) );
+						link.setAttribute( 'href', mw.util.getUrl(self.itsTitle) );
 						link.setAttribute( 'title', self.itsTitle );
 						link.appendChild( document.createTextNode(self.itsTitle) );
 						self.statelem.info( ['completed (',link,')'] );

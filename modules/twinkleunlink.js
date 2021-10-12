@@ -51,8 +51,7 @@ Twinkle.unlink.callback = function(presetReason) {
 			'iutitle': mw.config.get('wgPageName'),
 			'bllimit': Morebits.userIsInGroup( 'sysop' ) ? 5000 : 500, // 500 is max for normal users, 5000 for bots and sysops
 			'iulimit': Morebits.userIsInGroup( 'sysop' ) ? 5000 : 500, // 500 is max for normal users, 5000 for bots and sysops
-			'blnamespace': Twinkle.getPref('unlinkNamespaces'),
-			'iunamespace': Twinkle.getPref('unlinkNamespaces')
+			'blnamespace': Twinkle.getPref('unlinkNamespaces') // Main namespace and portal namespace only, keep on talk pages.
 		};
 	} else {
 		query = {
@@ -61,7 +60,7 @@ Twinkle.unlink.callback = function(presetReason) {
 			'bltitle': mw.config.get('wgPageName'),
 			'blfilterredir': 'nonredirects',
 			'bllimit': Morebits.userIsInGroup( 'sysop' ) ? 5000 : 500, // 500 is max for normal users, 5000 for bots and sysops
-			'blnamespace': Twinkle.getPref('unlinkNamespaces')
+			'blnamespace': Twinkle.getPref('unlinkNamespaces') // Main namespace and portal namespace only, keep on talk pages.
 		};
 	}
 	var wikipedia_api = new Morebits.wiki.api( 'Grabbing backlinks', query, Twinkle.unlink.callbacks.display.backlinks );
@@ -106,11 +105,6 @@ Twinkle.unlink.callback.evaluate = function twinkleunlinkCallbackEvaluate(event)
 	}
 
 	var reason = event.target.reason.value;
-	if (!reason) {
-		alert("You must specify a reason for unlinking.");
-		return;
-	}
-
 	var backlinks, imageusage;
 	if( event.target.backlinks ) {
 		backlinks = Twinkle.unlink.getChecked2(event.target.backlinks);

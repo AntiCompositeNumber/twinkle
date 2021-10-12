@@ -9,7 +9,7 @@ var scriptpathbefore = mw.util.wikiScript( "index" ) + "?title=",
 $.ajax({
 	url: scriptpathbefore + "User:" + encodeURIComponent( mw.config.get("wgUserName")) + "/twinkleoptions.js" + scriptpathafter,
 	dataType: "text",
-	error: function () { mw.util.jsMessage( "Could not load twinkleoptions.js" ); },
+	error: function () { mw.notify( "Could not load twinkleoptions.js" ); },
 	success: function ( optionsText ) {
 
 		// Quick pass if user has no options
@@ -26,7 +26,7 @@ $.ajax({
 		}
 
 		try {
-			var options = $.parseJSON( optionsText );
+			var options = JSON.parse( optionsText );
 
 			// Assuming that our options evolve, we will want to transform older versions:
 			//if ( options.optionsVersion === undefined ) {
@@ -44,7 +44,7 @@ $.ajax({
 			}
 		}
 		catch ( e ) {
-			mw.util.jsMessage("Could not parse twinkleoptions.js");
+			mw.notify("Could not parse twinkleoptions.js");
 		}
 	},
 	complete: function () {
@@ -56,18 +56,28 @@ $.ajax({
 // For example, mw.loader.load(scriptpathbefore + "User:UncleDouggie/morebits-test.js" + scriptpathafter);
 
 Twinkle.load = function () {
-	    // Don't activate on special pages other than "Contributions" so that they load faster, especially the watchlist.
-	var isSpecialPage = ( mw.config.get('wgNamespaceNumber') === -1
-	    	&& mw.config.get('wgCanonicalSpecialPageName') !== "Contributions"
-	    	&& mw.config.get('wgCanonicalSpecialPageName') !== "Prefixindex" ),
-
-	    // Also, Twinkle is incompatible with Internet Explorer versions 8 or lower, so don't load there either.
-	    isOldIE = ( $.client.profile().name === 'msie' && $.client.profile().versionNumber < 9 );
-
-    // Prevent users that are not autoconfirmed from loading Twinkle as well.
-	if ( isSpecialPage || isOldIE || !twinkleUserAuthorized ) {
+	// Don't activate on special pages other than "Contributions" so that they load faster, especially the watchlist.
+	// Also, Twinkle is incompatible with Internet Explorer versions 8 or lower, so don't load there either.
+	var specialPageWhitelist = [ 'Block', 'Contributions', 'Recentchanges', 'Recentchangeslinked' ]; // wgRelevantUserName defined for non-sysops on Special:Block
+	if (Morebits.userIsInGroup('sysop')) {
+		specialPageWhitelist = specialPageWhitelist.concat([ 'DeletedContributions', 'Prefixindex' ]);
+	}
+	if (mw.config.get('wgNamespaceNumber') === -1 &&
+		specialPageWhitelist.indexOf(mw.config.get('wgCanonicalSpecialPageName')) === -1) {
 		return;
 	}
+	
+	// Prevent clickjacking
+	if (window.top !== window.self) {
+		return;
+	}
+	
+	if ($.client.profile().name === 'msie' && $.client.profile().versionNumber < 9) {
+		return;
+	}
+	
+	// Set custom Api-User-Agent header, for server-side logging purposes
+	Morebits.wiki.api.setApiUserAgent('Twinkle/2.0 (' + mw.config.get('wgDBname') + ')');
 
 	// Load the modules in the order that the tabs should appears
 	// User/user talk-related
@@ -78,20 +88,16 @@ Twinkle.load = function () {
 	Twinkle.talkback();
 	// Deletion
 	Twinkle.speedy();
-	Twinkle.prod();
 	Twinkle.xfd();
-	Twinkle.image();
 	// Maintenance
-	Twinkle.protect();
 	Twinkle.tag();
+	Twinkle.stub();
 	// Misc. ones last
 	Twinkle.diff();
 	Twinkle.unlink();
 	Twinkle.config.init();
 	Twinkle.fluff.init();
 	if ( Morebits.userIsInGroup('sysop') ) {
-		Twinkle.delimages();
-		Twinkle.deprod();
 		Twinkle.batchdelete();
 		Twinkle.batchprotect();
 		Twinkle.batchundelete();
