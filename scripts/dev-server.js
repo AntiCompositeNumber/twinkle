@@ -17,12 +17,12 @@ const server = http.createServer(async (request, response) => {
 	const jsFiles = ['morebits.js', 'twinkle.js'].concat(moduleFiles.map(f => 'modules/' + f));
 	const cssFiles = ['morebits.css'];
 
-	let jsCode = `mw.loader.load(['jquery.ui', 'ext.gadget.select2']);`;
+	let jsCode = `mw.loader.load(['jquery.ui', 'jquery.tipsy']);`;
 	for (let file of jsFiles) {
 		jsCode += await readFile(file);
 	}
 	for (let file of cssFiles) {
-		let css = (await readFile(file)).replace(/\s+/g, ' ');
+		let css = (await readFile(file)).replace(/\s+/g, ' ').replace(/'/g, "\\\'");
 		jsCode += `;mw.loader.addStyleTag('${css}');`;
 	}
 	jsCode += `;console.log('Loaded debug version of Twinkle.');`;
